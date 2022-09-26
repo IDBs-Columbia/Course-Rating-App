@@ -78,7 +78,8 @@ CREATE TABLE `report` (
   PRIMARY KEY (`report_id`),
   FOREIGN KEY (`to_comment_id`) REFERENCES `comment` (`comment_id`) ON DELETE CASCADE,
   FOREIGN KEY (`to_rating_id`) REFERENCES `rating` (`rating_id`) ON DELETE CASCADE,
-  FOREIGN KEY (`from_user_id`) REFERENCES `regular_user` (`user_id`)
+  FOREIGN KEY (`from_user_id`) REFERENCES `regular_user` (`user_id`),
+  CHECK NOT ((`to_comment_id` IS NULL AND `to_rating_id` IS NULL) OR (`to_comment_id` IS NOT NULL AND `to_rating_id` IS NOT NULL))
 ) ;
 
 
