@@ -127,18 +127,10 @@ CREATE TABLE Report(
         ON DELETE CASCADE
 
     -- Specialization constraints
-    CHECK 
-        (
-            `comment_id` IS NOT NULL 
-            OR
-            `thread_id` IS NOT NULL
-        ) 
-        AND
-        (
-            `comment_id` IS NULL 
-            OR
-            `thread_id` IS NULL
-        )
+    CHECK( 
+        (`comment_id` IS NOT NULL OR `thread_id` IS NOT NULL) AND
+        (`comment_id` IS NULL OR `thread_id` IS NULL)
+    )
 );
 
 CREATE TABLE User_Regular_rate_Course(
