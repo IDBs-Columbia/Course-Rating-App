@@ -171,7 +171,7 @@ CREATE TABLE User_Regular_creates_Thread(
 );
 
 CREATE TABLE User_Regular_rates_Thread(
-    `helpful` boolean,
+    `is_helpful` boolean,
 
     -- Regular User attributes
     `user_id` int NOT NULL,
@@ -184,7 +184,7 @@ CREATE TABLE User_Regular_rates_Thread(
 );
 
 CREATE TABLE User_Regular_rates_Comment(
-    `helpful` boolean,
+    `is_helpful` boolean,
 
     -- Regular User attributes
     `user_id` int NOT NULL,
