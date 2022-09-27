@@ -3,6 +3,10 @@
 -- Attributes: attribute name (e.g., name)                                  [Lower Case]
 -- Relationship Set tables: Entity1 name + relationship  + Entity2 name     [Lower Case for Relationship Name]     
 --     (e.g., Player_eats_Ghosts)
+-- Cardinality:
+--  1:n one to many (partial)
+--  1:N one to many (total)
+--  M:N many to many (total)
 
 CREATE TABLE User(
     -- Base Table for Users
@@ -124,7 +128,7 @@ CREATE TABLE Report(
         ON DELETE CASCADE,
     FOREIGN KEY (`thread_id`)
         REFERENCES Thread (`id`)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
 
     -- Specialization constraints
     CHECK( 
@@ -133,56 +137,57 @@ CREATE TABLE Report(
     )
 );
 
-CREATE TABLE User_Regular_rate_Course(
+CREATE TABLE User_Regular_rates_Course(             -- m:n
     `course_satisfaction` int NOT NULL,
     `difficulty` int NOT NULL,
     `workload` int NOT NULL,
     `description` text,
     
     -- Regular User attributes
-    `user_id` int NOT NULL,
+    `user_id` int REFERENCES User_Regular (`id`),
 
     -- Course attributes
-    `call_number` int NOT NULL,
+    `call_number` int REFERENCES Course (`call_number`),
 
     -- Key constraints
     PRIMARY KEY(`user_id`, `call_number`)
 );
 
-CREATE TABLE User_Regular_creates_Thread(
+CREATE TABLE User_Regular_creates_Thread(           -- 1:N
     -- Thread attributes
-    `thread_id` int PRIMARY KEY,
+    `thread_id` int,
 
     -- Regular User attributes
     `user_id` int NOT NULL,
 
     -- Key constraints
+    PRIMARY KEY (`thread_id`),
     FOREIGN KEY (`user_id`)
-        REFERENCES User_Regular(`id`)
+        REFERENCES User_Regular (`id`)
         ON DELETE NO ACTION
 );
 
-CREATE TABLE User_Regular_rates_Thread(
+CREATE TABLE User_Regular_rates_Thread(             -- m:n
     `is_helpful` boolean,
 
     -- Regular User attributes
-    `user_id` int NOT NULL,
+    `user_id` int REFERENCES User_Regular (`id`),
 
     -- Thread attributes
-    `thread_id` int NOT NULL,
+    `thread_id` int REFERENCES Thread (`id`),
 
     -- Key constraints
     PRIMARY KEY (`user_id`, `thread_id`)
 );
 
-CREATE TABLE User_Regular_rates_Comment(
+CREATE TABLE User_Regular_rates_Comment(            -- m:n
     `is_helpful` boolean,
 
     -- Regular User attributes
-    `user_id` int NOT NULL,
+    `user_id` int REFERENCES User_Regular (`id`),
 
     -- Comment attributes
-    `comment_id` int NOT NULL,
+    `comment_id` int REFERENCES Comment (`id`),
 
     -- Key constraints
     PRIMARY KEY (`user_id`, `comment_id`)
