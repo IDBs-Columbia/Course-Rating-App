@@ -56,11 +56,7 @@ CREATE TABLE Course(
     `instructor` text NOT NULL,
 
     -- Institution table attributes
-    `institution_id` int,
-
-    -- Key constraints
-    FOREIGN KEY (`institution_id`)
-        REFERENCES Institution (`id`)
+    `institution_id` int REFERENCES Institution (`id`)
 );
 
 CREATE TABLE Institution(
@@ -73,6 +69,9 @@ CREATE TABLE Thread(
     `title` text NOT NULL,
     `description` text,
     `date` datetime NOT NULL
+
+    -- Regular User attributes
+    `user_id` int REFERENCES User_Regular (`id`)
 );
 
 CREATE TABLE Comment(
@@ -111,7 +110,7 @@ CREATE TABLE Report(
     `date` datetime NOT NULL,
 
     -- Regular User attributes
-    `user_id` int NOT NULL,
+    `user_id` int REFERENCES User_Regular (`id`),
 
     -- Comment attributes
     `comment_id` int, 
@@ -119,10 +118,7 @@ CREATE TABLE Report(
     -- Thread attributes
     `thread_id` int,
 
-    -- Key constraintS
-    FOREIGN KEY (`user_id`)
-        REFERENCES User_Regular (`id`),
-        ON DELETE NO ACTION,
+    -- Key constraints
     FOREIGN KEY (`comment_id`)
         REFERENCES Comment (`id`)
         ON DELETE CASCADE,
@@ -153,20 +149,6 @@ CREATE TABLE User_Regular_rates_Course(             -- m:n
     PRIMARY KEY(`user_id`, `call_number`)
 );
 
-CREATE TABLE User_Regular_creates_Thread(           -- 1:N
-    -- Thread attributes
-    `thread_id` int,
-
-    -- Regular User attributes
-    `user_id` int NOT NULL,
-
-    -- Key constraints
-    PRIMARY KEY (`thread_id`),
-    FOREIGN KEY (`user_id`)
-        REFERENCES User_Regular (`id`)
-        ON DELETE NO ACTION
-);
-
 CREATE TABLE User_Regular_rates_Thread(             -- m:n
     `is_helpful` boolean,
 
@@ -190,5 +172,5 @@ CREATE TABLE User_Regular_rates_Comment(            -- m:n
     `comment_id` int REFERENCES Comment (`id`),
 
     -- Key constraints
-    PRIMARY KEY (`user_id`, `comment_id`)
+    PRIMARY KEY (`user_id`, `comment_id`),
 );
