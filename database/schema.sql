@@ -69,6 +69,14 @@ CREATE TABLE Thread(
     `title` text NOT NULL,
     `description` text,
     `date` datetime NOT NULL
+
+    -- Regular User attributes
+    `user_id` int NOT NULL,
+
+    -- Key constraints
+    FOREIGN KEY (`user_id`)
+        REFERENCES User_Regular(`id`)
+        ON DELETE NO ACTION
 );
 
 CREATE TABLE Comment(
@@ -146,19 +154,12 @@ CREATE TABLE User_Regular_rate_Course(
     `call_number` int NOT NULL,
 
     -- Key constraints
-    PRIMARY KEY(`user_id`, `call_number`)
-);
-
-CREATE TABLE User_Regular_creates_Thread(
-    -- Thread attributes
-    `thread_id` int PRIMARY KEY,
-
-    -- Regular User attributes
-    `user_id` int NOT NULL,
-
-    -- Key constraints
-    FOREIGN KEY (`user_id`)
-        REFERENCES User_Regular(`id`)
+    PRIMARY KEY(`user_id`, `call_number`),
+    FOREIGN KEY (`user_id`) 
+        REFERENCES User_Regular (`id`),
+        ON DELETE NO ACTION,
+    FOREIGN KEY (`call_number`) 
+        REFERENCES Course (`call_number`),
         ON DELETE NO ACTION
 );
 
@@ -172,7 +173,13 @@ CREATE TABLE User_Regular_rates_Thread(
     `thread_id` int NOT NULL,
 
     -- Key constraints
-    PRIMARY KEY (`user_id`, `thread_id`)
+    PRIMARY KEY (`user_id`, `thread_id`),
+    FOREIGN KEY (`user_id`) 
+        REFERENCES User_Regular (`id`),
+        ON DELETE NO ACTION,
+    FOREIGN KEY (`thread_id`) 
+        REFERENCES Thread (`id`),
+        ON DELETE NO ACTION
 );
 
 CREATE TABLE User_Regular_rates_Comment(
@@ -185,5 +192,11 @@ CREATE TABLE User_Regular_rates_Comment(
     `comment_id` int NOT NULL,
 
     -- Key constraints
-    PRIMARY KEY (`user_id`, `comment_id`)
+    PRIMARY KEY (`user_id`, `comment_id`),
+    FOREIGN KEY (`user_id`) 
+        REFERENCES User_Regular (`id`),
+        ON DELETE NO ACTION,
+    FOREIGN KEY (`comment_id`) 
+        REFERENCES Comment (`id`),
+        ON DELETE NO ACTION
 );
