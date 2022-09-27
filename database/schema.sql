@@ -24,7 +24,7 @@ CREATE TABLE User_Regular(
 
     -- Key constraints
     FOREIGN KEY (`email`)
-        REFERENCES User
+        REFERENCES User (`email`)
         ON DELETE CASCADE
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE User_Admin(
 
     -- Key constraints
     FOREIGN KEY (`email`) 
-        REFERENCES User
+        REFERENCES User (`email`)
         ON DELETE CASCADE
 );
 
@@ -90,13 +90,13 @@ CREATE TABLE Comment(
 
     -- Key constraints
     FOREIGN KEY (`user_id`) 
-        REFERENCES User_Regular    
+        REFERENCES User_Regular (`id`)
         ON DELETE CASCADE,       
     FOREIGN KEY (`thread_id`)
-        REFERENCES Thread
+        REFERENCES Thread (`id`)
         ON DELETE CASCADE,
     FOREIGN KEY (`reply_id`)
-        REFERENCES Comment
+        REFERENCES Comment (`id`)
         ON DELETE CASCADE
 );
 
