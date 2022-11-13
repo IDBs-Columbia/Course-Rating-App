@@ -1,1 +1,10 @@
 src/.env
+
+# all pyc files
+*.pyc
+
+# all .env files
+.env
+
+# all pipfiles
+Pipfile*
