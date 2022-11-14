@@ -4,14 +4,37 @@ from flask import Flask, redirect, render_template, \
 from blueprints.course import bp as course_bp
 from utils.json_encoder import MyJSONEncoder
 
-app = Flask(__name__)
+import os
+
+template_folder = os.path.abspath('../frontend')
+static_folder = os.path.abspath('../frontend/assets')
+
+
+
+app = Flask(
+    __name__,
+    template_folder = template_folder,
+    static_folder = static_folder
+)
+
 app.json_provider_class = MyJSONEncoder
 app.register_blueprint(course_bp)
 app.secret_key = 'any random string'
 
 @app.route('/', methods = ['GET'])
 def index():
-    return render_template('index.html')
+
+    template_vars = {
+        'account_id': request.cookies.get('account_id'),
+        'account_url': request.cookies.get('account_url')
+    }
+
+    return render_template('index.html', **template_vars)
+
+@app.route('/review', methods = ['GET'])
+def get_class(classname:str):
+    
+    return render_template('review.html', classname=classname)
 
 @app.route('/class/<classname>', methods = ['GET'])
 def get_class(classname:str):
@@ -67,6 +90,6 @@ def user(usr):
 if __name__ == '__main__':
     app.run(
         host='localhost',
-        port=5000,
+        port=8111,
         debug=True
     )
