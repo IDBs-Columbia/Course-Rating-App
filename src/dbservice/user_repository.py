@@ -16,10 +16,10 @@ def get_user_info_by_email(email):
     sql = """
                 SELECT T.*, name
                 FROM
-                    (SELECT email, status
+                    (SELECT email, status, id
                     FROM USER_REGULAR
-                    UNION 
-                    SELECT email, 'admin' as status
+                    UNION ALL
+                    SELECT email, 'admin' as status, id
                     FROM USER_ADMIN) AS T
                     JOIN USER_ALL AS UA ON UA.EMAIL = T.EMAIL
                 WHERE T.email = (%s)
