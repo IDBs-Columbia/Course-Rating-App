@@ -5,7 +5,7 @@ from blueprints.course import bp as course_bp
 from utils.json_encoder import MyJSONEncoder
 
 app = Flask(__name__)
-app.json_provider_class = MyJSONEncoder
+app.json_encoder = MyJSONEncoder
 app.register_blueprint(course_bp)
 app.secret_key = 'any random string'
 
@@ -60,9 +60,9 @@ def register():
     else:
         return render_template('register.html', error = error)
 
-@app.route('/<usr>')
-def user(usr):
-    return f'<h1>Hello {usr}</h1>'
+# @app.route('/<usr>')
+# def user(usr):
+#     return f'<h1>Hello {usr}</h1>'
 
 if __name__ == '__main__':
     app.run(
