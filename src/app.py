@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, \
                  request, url_for, flash
 
+from blueprints.index import bp as index_bp
 from blueprints.course import bp as course_bp
 from blueprints.thread import bp as thread_bp
 from utils.json_encoder import MyJSONEncoder
@@ -10,8 +11,6 @@ import os
 template_folder = os.path.abspath('../frontend')
 static_folder = os.path.abspath('../frontend/assets')
 
-
-
 app = Flask(
     __name__,
     template_folder = template_folder,
@@ -19,36 +18,14 @@ app = Flask(
 )
 
 app.json_provider_class = MyJSONEncoder
+app.register_blueprint(index_bp)
 app.register_blueprint(course_bp)
 app.register_blueprint(thread_bp)
 app.secret_key = 'any random string'
 
-@app.route('/', methods = ['GET'])
-def index():
-
-    template_vars = {
-        'account_id': request.cookies.get('account_id'),
-        'account_url': request.cookies.get('account_url')
-    }
-
-    return render_template('index.html', **template_vars)
-
 @app.route('/review', methods = ['GET'])
 def get_class(classname:str):
-    
     return render_template('review.html', classname=classname)
-
-@app.route('/class/<classname>', methods = ['GET'])
-def get_class(classname:str):
-    return {'class': classname }
-
-@app.route('/class/<classname>', methods = ['PUT'])
-def post_class(classname:str):
-    return {'class': classname }
-
-@app.route('/class/<classname>', methods = ['DELETE'])
-def delete_class(classname:str):
-    return {'class': classname }
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
