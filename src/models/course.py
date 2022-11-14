@@ -13,7 +13,7 @@ class Course:
     workload: float = 1
     difficulty: float = 1
 
-    def __init__(self, query_result):
+    def __init__(self, query_result:dict):
         for key, value in query_result.items():
             self.__set_values(key, value)
 
