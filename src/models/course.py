@@ -6,12 +6,12 @@ class Course:
     call_number: int
     course_number: int
     name: str
-    description: str
-    instructor: str
     institution_id: int
-    satisfaction: float
-    workload: float
-    difficulty: float
+    description: str = "No description for this course."
+    instructor: str = "No instructor for this course."
+    satisfaction: float = 1
+    workload: float = 1
+    difficulty: float = 1
 
     def __init__(self, query_result):
         for key, value in query_result.items():
