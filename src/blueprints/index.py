@@ -1,6 +1,14 @@
 from flask import Blueprint, render_template, request
+import os
 
-bp = Blueprint("index", __name__, url_prefix="/")
+static_folder = os.path.abspath('../frontend/assets')
+
+bp = Blueprint(
+    "index",
+    __name__,
+    static_folder=static_folder,
+    url_prefix="/"
+)
 
 @bp.route('/', methods = ['GET'])
 def index():
