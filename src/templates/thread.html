@@ -49,15 +49,15 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <h1 class="text-center">{{class_name}} &gt; {{thread_title}}</h1>
+                    <h1 class="text-center">{{thread.course_number}} &gt; {{thread.title}}</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col"><a href="/users/">{{thread_author}}</a></div>
+                <div class="col"><a href="/users/">anonymous</a></div>
             </div>
             <div class="row">
                 <div class="col">
-                    <p>{{thread_description}}</p>
+                    <p>{{thread.description}}</p>
                 </div>
             </div>
             <div class="row">
@@ -75,7 +75,7 @@
                 <div class="card-header">
                     <h3>Comments</h3>
                 </div>
-                <div class="card-body" style="height:233px;">{% for comment in comments %}
+                <div class="card-body" style="height:auto;">{% for comment in comments %}
                     <ul class="list-group">
                         <li class="list-group-item" style="margin-bottom: 6px;display: inline-flex;">
                             <div class="d-flex media" style="margin: 0px;width: 90%;margin-right: 40px;">
@@ -89,7 +89,7 @@
                                         <div style="overflow:visible;" class="media-body">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <p><a href="#">{{comment.author}}</a>&nbsp;{{coment.content}}<br>
+                                                    <p><a href="#">{{comment.author}}</a>&nbsp;{{comment.content}}<br>
 <small class="text-muted">{{comment.date}}</small></p>
                                                 </div>
                                             </div>
