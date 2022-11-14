@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 import dbservice.config as config
 
 
@@ -7,42 +8,66 @@ def get_connection():
     db_connection = psycopg2.connect(
         **db_info
     )
-    return db_connection
+    cursor = db_connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    return db_connection, cursor
 
 
 def get_all_courses():
-    conn = get_connection()
-    cur = conn.cursor()
+    conn, cur = get_connection()
 
     sql = "select * from course"
 
     cur.execute(sql)
-    fields = [field_md[0] for field_md in cur.description]
-    res = [dict(zip(fields, row)) for row in cur.fetchall()]
+    res = cur.fetchall()
 
     conn.close()
 
     return res
 
+
 def get_all_courses_with_stat():
-    conn = get_connection()
-    cur = conn.cursor()
+    conn, cur = get_connection()
 
     sql = """
-    SELECT *
-    FROM (
-         SELECT CALL_NUMBER,
+    SELECT C.CALL_NUMBER, NAME, COURSE_NUMBER, RATING, WORKLOAD, DIFFICULTY, INSTITUTION_NAME
+    FROM COURSE AS C
+    LEFT JOIN  (SELECT CALL_NUMBER,
                 avg(COURSE_SATISFACTION) AS RATING,
                 avg(WORKLOAD)            AS WORKLOAD,
                 avg(DIFFICULTY)          AS DIFFICULTY
-         FROM USER_REGULAR_RATES_COURSE
-         GROUP BY CALL_NUMBER) AS T
-         JOIN COURSE AS C ON C.CALL_NUMBER = T.CALL_NUMBER;
+                FROM USER_REGULAR_RATES_COURSE
+                GROUP BY CALL_NUMBER) AS T
+    ON C.CALL_NUMBER = T.CALL_NUMBER
+    JOIN INSTITUTION I ON C.INSTITUTION_ID = I.ID;
     """
 
     cur.execute(sql)
-    fields = [field_md[0] for field_md in cur.description]
-    res = [dict(zip(fields, row)) for row in cur.fetchall()]
+    # fields = [field_md[0] for field_md in cur.description]
+    # res = [dict(zip(fields, row)) for row in cur.fetchall()]
+
+    res = cur.fetchall()
+    conn.close()
+
+    return res
+
+
+def get_course_with_stat(call_number):
+    conn, cur = get_connection()
+
+    sql = """
+        SELECT *
+        FROM (
+             SELECT avg(COURSE_SATISFACTION) AS RATING,
+                    avg(WORKLOAD)            AS WORKLOAD,
+                    avg(DIFFICULTY)          AS DIFFICULTY
+             FROM USER_REGULAR_RATES_COURSE
+             WHERE call_number = (%s)
+             ) AS T, COURSE AS C
+        WHERE C.CALL_NUMBER = (%s);
+        """
+
+    cur.execute(sql, [call_number, call_number])
+    res = cur.fetchone()
 
     conn.close()
 

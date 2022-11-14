@@ -2,6 +2,7 @@ from flask import Flask, redirect, render_template, \
                  request, url_for, flash
 
 from blueprints.course import bp as course_bp
+from blueprints.thread import bp as thread_bp
 from utils.json_encoder import MyJSONEncoder
 
 import os
@@ -19,6 +20,7 @@ app = Flask(
 
 app.json_provider_class = MyJSONEncoder
 app.register_blueprint(course_bp)
+app.register_blueprint(thread_bp)
 app.secret_key = 'any random string'
 
 @app.route('/', methods = ['GET'])
@@ -83,9 +85,9 @@ def register():
     else:
         return render_template('register.html', error = error)
 
-@app.route('/<usr>')
-def user(usr):
-    return f'<h1>Hello {usr}</h1>'
+# @app.route('/<usr>')
+# def user(usr):
+#     return f'<h1>Hello {usr}</h1>'
 
 if __name__ == '__main__':
     app.run(
