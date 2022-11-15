@@ -7,10 +7,13 @@ from datetime import date
 
 import os
 
+relative_static_folder = os.environ.get("STATIC_FOLDER")
+static_folder = os.path.abspath(relative_static_folder)
 
 bp = Blueprint(
     "thread",
     __name__,
+    static_folder=static_folder,
     url_prefix="/thread"
 )
 
@@ -35,10 +38,9 @@ def get_thread_detail(id):
 def add_comment(id):
     thread_id = id
     comment = request.form.get('comment_content')
-    reply_id = request.form.get('reply_id', 1)
     user_id = session.get('user').get("id")
 
-    comment_repository.add_comment(comment, user_id, thread_id, reply_id)
+    comment_repository.add_new_comment(comment, date.today(), user_id, thread_id)
     return "comment successfully submitted!"
 
 
