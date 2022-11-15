@@ -5,6 +5,3 @@ src/.env
 
 # all .env files
 .env
-
-# all pipfiles
-Pipfile*

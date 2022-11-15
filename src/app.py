@@ -1,6 +1,9 @@
 from flask import Flask, redirect, render_template, \
                  request, url_for, flash
 
+from dotenv import load_dotenv
+load_dotenv('config.env')
+
 from blueprints.index import bp as index_bp
 from blueprints.admin import bp as admin_bp
 from blueprints.course import bp as course_bp
