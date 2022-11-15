@@ -112,7 +112,7 @@
                             <tr class="warning no-result">
                                 <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
                             </tr>
-                            <tr temp="{% for comment in comments %}"></tr>
+                            <tr temp="{% for thread in threads %}"></tr>
                             <tr style="width: auto;">
                                 <td class="text-center justify-content-center align-items-center">{{thread.id}}</td>
                                 <td class="text-truncate text-center justify-content-center align-items-center">{{thread.title}}<br></td>
@@ -142,6 +142,7 @@
             </div>
         </main>
     </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/script.min.js"></script>
 </body>

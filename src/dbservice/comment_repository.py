@@ -12,6 +12,28 @@ def get_connection():
     cursor = db_connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     return db_connection, cursor
 
+def get_comments():
+    conn, cur = get_connection()
+    sql = """
+        SELECT *
+        FROM comment
+    """
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.close()
+    return res
+
+def get_likes_dislikes():
+    conn, cur = get_connection()
+    sql = """
+        SELECT *
+        FROM comment
+    """
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.close()
+    return res
+
 def get_author_by_comment_id(comment_id):
     conn, cur = get_connection()
     sql = """

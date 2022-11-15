@@ -1,10 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import os
 
+relative_static_folder = os.environ.get("STATIC_FOLDER")
+static_folder = os.path.abspath(relative_static_folder)
 
 bp = Blueprint(
     "index",
     __name__,
+    static_folder=static_folder,
     url_prefix="/"
 )
 

@@ -10,6 +10,7 @@ from models.comment import Comment
 from models.user import User
 from models.reports import Report
 from models.institution import Institution
+from models.course import Course
 
 import os
 
@@ -55,10 +56,25 @@ def get_reports():
     reports = Report.get_reports()
     return render_template("admin/report-dashboard.html", reports = reports)
 
+@bp.route("/courses")
+def get_courses():
+    courses = Course.get_courses()
+    return render_template("admin/courses-dashboard.html", courses = courses)
+
+@bp.route("/threads")
+def get_threads():
+    threads = Thread.get_threads()
+    return render_template("admin/threads-dashboard.html", threads = threads)
+
 @bp.route("/institutions")
 def get_institutions():
     institutions = Institution.get_institutions()
     return render_template("admin/institution-dashboard.html", institutions = institutions)
+
+@bp.route("/comments")
+def get_comments():
+    comments = Comment.get_comments()
+    return render_template("admin/comment-dashboard.html", comments = comments)
 
 @bp.route("/institutions", methods = ['POST'])
 def add_institutions():

@@ -5,11 +5,11 @@ from dbservice import user_repository
 @dataclass
 class Comment():
     comment_id: str
-    content: str
     date: str
     reply_id: str
     user_id: str
     thread_id: str
+    content: str = ""
     likes: int = 0
     dislikes: int = 0
     author: str = None
@@ -86,5 +86,12 @@ class Comment():
                     comment.reply_author = reply_author.get("name")
                 
         return comments
+
+    @staticmethod
+    def get_comments():
+        comments = Comment.comment_list(comment_repository.get_comments())
+        # add likes
+        return comments
+            
 
     

@@ -11,6 +11,15 @@ def get_connection():
     cursor = db_connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     return db_connection, cursor
 
+def get_threads():
+    conn, cur = get_connection()
+    sql = """
+            SELECT * FROM thread
+        """
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.close()
+    return res
 
 def find_all_thread_by_course(call_number):
     conn, cur = get_connection()

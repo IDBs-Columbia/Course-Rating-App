@@ -49,3 +49,7 @@ class Thread():
     @staticmethod
     def get_thread_by_id(id):
         return Thread(thread_repository.get_thread_by_id(id))
+
+    @staticmethod
+    def get_threads():
+        return Thread.thread_list(thread_repository.get_threads())

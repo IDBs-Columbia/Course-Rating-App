@@ -130,6 +130,7 @@ def get_all_staff_users():
 
     cur.execute(sql)
     res = cur.fetchall()
+    return res
     
 def get_admin_permision(email):
     conn, cur = get_connection()
