@@ -1,7 +1,7 @@
 import psycopg2
 import psycopg2.extras
 import dbservice.config as config
-
+from datetime import datetime
 
 def get_connection():
     db_info = config.get_db_info()
@@ -41,3 +41,17 @@ def get_thread_by_id(id):
     res = cur.fetchone()
     conn.close()
     return res
+
+def add_thread(title, description, user_id, call_number):
+    conn, cur = get_connection()
+    id_hash = str(hash(description))[:6]
+    id = abs(int(id_hash))
+
+    date = "NOW()"
+    sql = """
+            INSERT INTO THREAD(id, title, description, date, user_id, call_number)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """
+    cur.execute(sql, (id, title, description, date, user_id, call_number))
+    conn.commit()
+    conn.close()

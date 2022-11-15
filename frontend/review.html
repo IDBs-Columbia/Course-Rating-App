@@ -161,7 +161,8 @@
                                 <div class="dropdown-menu dropdown-menu-end text-danger"><a class="dropdown-item fw-bold link-danger" href="#" data-bs-target="#modal-1" data-bs-toggle="modal" style="margin-right: auto;margin-left: auto;height: 100%;width: 100%;text-align: center;">Report</a></div>
                             </div>
                         </li>
-                    </ul><!-- End: User Tasks and User Activity Streams - List Group -->{% endfor %}<button class="btn btn-light" style="margin-left:601px;margin-top:-9px;" type="button">Add Thread</button>
+                    </ul><!-- End: User Tasks and User Activity Streams - List Group -->{% endfor %}
+                    <form method="POST"><input class="form-control" type="text" name="title" placeholder="Insert your thread title"><textarea class="form-control" name="description" placeholder="Write your comment here" style="width: 100%;" rows="10"></textarea><button class="btn btn-light" style="margin-left: 601px;margin-top: 10px;" type="submit">Add Thread</button></form>
                 </div><!-- Start: Report Screen -->
                 <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
                     <div class="modal-dialog" role="document">
