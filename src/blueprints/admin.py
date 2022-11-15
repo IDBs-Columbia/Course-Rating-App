@@ -36,45 +36,45 @@ def get_permissions(session):
 @bp.route("/")
 def get_admin_dashboard():
     permission = get_permissions(session)
-    return render_template("admin/dashboard.html")
+    return render_template("admin/dashboard.html", user=session.get('user', None))
 
 
 @bp.route("/users/regular")
 def get_regular_users():
 
     users = User.get_regular_users()
-    return render_template("admin/user-dashboard.html", users = users)
+    return render_template("admin/user-dashboard.html", users = users, user=session.get('user', None))
 
 @bp.route("/users/staff")
 def get_staff_users():
 
     users = User.get_staff_users()
-    return render_template("admin/staff-dashboard.html", users = users)
+    return render_template("admin/staff-dashboard.html", users = users, user=session.get('user', None))
 
 @bp.route("/reports")
 def get_reports():
     reports = Report.get_reports()
-    return render_template("admin/report-dashboard.html", reports = reports)
+    return render_template("admin/report-dashboard.html", reports = reports, user=session.get('user', None))
 
 @bp.route("/courses")
 def get_courses():
     courses = Course.get_courses()
-    return render_template("admin/courses-dashboard.html", courses = courses)
+    return render_template("admin/courses-dashboard.html", courses = courses, user=session.get('user', None))
 
 @bp.route("/threads")
 def get_threads():
     threads = Thread.get_threads()
-    return render_template("admin/threads-dashboard.html", threads = threads)
+    return render_template("admin/threads-dashboard.html", threads = threads, user=session.get('user', None))
 
 @bp.route("/institutions")
 def get_institutions():
     institutions = Institution.get_institutions()
-    return render_template("admin/institution-dashboard.html", institutions = institutions)
+    return render_template("admin/institution-dashboard.html", institutions = institutions, user=session.get('user', None))
 
 @bp.route("/comments")
 def get_comments():
     comments = Comment.get_comments()
-    return render_template("admin/comment-dashboard.html", comments = comments)
+    return render_template("admin/comment-dashboard.html", comments = comments, user=session.get('user', None))
 
 @bp.route("/institutions", methods = ['POST'])
 def add_institutions():
