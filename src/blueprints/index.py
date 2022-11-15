@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 import os
 
 relative_static_folder = os.environ.get("STATIC_FOLDER")
@@ -13,4 +13,4 @@ bp = Blueprint(
 
 @bp.route('/', methods = ['GET'])
 def index():
-    return redirect(url_for("course.list_all_courses_with_stat"))
+    return redirect(url_for("course.list_all_courses_with_stat", user=session.get('user', None)))

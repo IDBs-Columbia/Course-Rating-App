@@ -31,7 +31,7 @@ def get_thread_detail(id):
     comments = Comment.get_comment_by_thread_id(id)
     # todo: Comment actually has a recursive structure (comment - subcomment - subsub comment...)
     # todo: How to recursively rendering sub comments with Jinja?
-    return render_template("thread.html", thread=thread, comments=comments)
+    return render_template("thread.html", thread=thread, comments=comments, user=session.get('user', None))
 
 @bp.route("/<int:id>", methods=['POST'])
 def add_comment(id):

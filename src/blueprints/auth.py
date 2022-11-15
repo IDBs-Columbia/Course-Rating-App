@@ -10,7 +10,7 @@ def login():
         if 'user' not in session:
             return render_template("login.html")
         else:
-            return redirect(url_for("course.list_all_courses_with_stat"))
+            return redirect(url_for("course.list_all_courses_with_stat", user=session.get('user', None)))
     if request.method == "POST":
         email, pw = request.form["email"], request.form["password"]
         res = user_repository.validate_login(email, pw)
@@ -20,7 +20,7 @@ def login():
             if user['status'] == "banned":
                 return render_template("login.html", error="You account has been suspended")
             session['user'] = user
-            return redirect(url_for("course.list_all_courses_with_stat"))
+            return redirect(url_for("course.list_all_courses_with_stat", user=session.get('user', None)))
         else:
             return render_template("login.html", error="Invalid email/password.")
 
@@ -37,7 +37,7 @@ def logout():
 def register():
     if request.method == "GET":
         if 'user' in session:
-            return redirect(url_for("course.list_all_courses_with_stat"))
+            return redirect(url_for("course.list_all_courses_with_stat", user=session.get('user', None)))
         else:
             return render_template("register.html")
     if request.method == "POST":
