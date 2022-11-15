@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, jsonify, request, redirect, url_for
+from flask import Blueprint,render_template, jsonify, request, redirect, url_for, session
 from dbservice import thread_repository
 from dbservice import comment_repository
 from dbservice import user_repository
@@ -23,8 +23,18 @@ bp = Blueprint(
     url_prefix="/admin"
 )
 
+def get_permissions(session):
+    if 'user' not in session:
+        return redirect(url_for("auth.login"))
+    if session['user']['status'] != "admin":
+        return "Regular users are not allowed to access admin board."
+
+    permission = user_repository.get_admin_permision(session['user']['email'])
+    return permission
+
 @bp.route("/")
 def get_admin_dashboard():
+    permission = get_permissions(session)
     return render_template("admin/dashboard.html")
 
 
@@ -55,3 +65,23 @@ def add_institutions():
     institution_name = request.form.get('institution_name')
     institution_repository.add_institution(institution_name)
     return redirect(url_for('admin.get_institutions'))
+
+# from flask import Blueprint, request, session, render_template, redirect, url_for
+
+# from dbservice import user_repository, report_repository
+
+# bp = Blueprint("admin1", __name__, url_prefix="/admin")
+
+
+# @bp.route("/", methods=["GET"])
+# def admin_index():
+#     if 'user' not in session:
+#         return redirect(url_for("auth.login"))
+#     if session['user']['status'] != "admin":
+#         return "Regular users are not allowed to access admin board."
+
+#     permission = user_repository.get_admin_permision(session['user']['email'])
+
+#     reports = report_repository.get_all_report()
+
+#     return render_template("admin.html", permission=permission, reports=reports, user=session.get('user', None))

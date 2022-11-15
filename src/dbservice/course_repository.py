@@ -72,3 +72,16 @@ def get_course_with_stat(call_number):
     conn.close()
 
     return res
+
+
+def add_user_rating(call_number, rating, workload, difficulty, uid):
+    conn, cur = get_connection()
+    sql = """
+        INSERT INTO USER_REGULAR_RATES_COURSE
+        VALUES ((%s), (%s), (%s), (%s), (%s))
+        """
+
+    cur.execute(sql, [int(rating), int(difficulty), int(workload), uid, call_number])
+    conn.commit()
+    conn.close()
+    return

@@ -35,10 +35,10 @@ def get_user_info_by_email(email):
     sql = """
                 SELECT T.*, name
                 FROM
-                    (SELECT id, email, status
+                    (SELECT email, status, id
                     FROM USER_REGULAR
-                    UNION 
-                    SELECT id, email, 'admin' as status
+                    UNION ALL
+                    SELECT email, 'admin' as status, id
                     FROM USER_ADMIN) AS T
                     JOIN USER_ALL AS UA ON UA.EMAIL = T.EMAIL
                 WHERE T.email = (%s)
@@ -130,4 +130,15 @@ def get_all_staff_users():
 
     cur.execute(sql)
     res = cur.fetchall()
+    
+def get_admin_permision(email):
+    conn, cur = get_connection()
+    sql = """
+            SELECT can_manage_report, can_manage_course, can_manage_comment, can_manage_user
+            FROM USER_ADMIN
+            WHERE email = (%s)
+        """
+    cur.execute(sql, [email])
+    res = cur.fetchone()
+
     return res

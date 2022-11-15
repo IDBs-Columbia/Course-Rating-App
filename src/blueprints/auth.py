@@ -16,7 +16,10 @@ def login():
         res = user_repository.validate_login(email, pw)
 
         if res:
-            session['user'] = user_repository.get_user_info_by_email(email)
+            user = user_repository.get_user_info_by_email(email)
+            if user['status'] == "banned":
+                return render_template("login.html", error="You account has been suspended")
+            session['user'] = user
             return redirect(url_for("course.list_all_courses_with_stat"))
         else:
             return render_template("login.html", error="Invalid email/password.")
