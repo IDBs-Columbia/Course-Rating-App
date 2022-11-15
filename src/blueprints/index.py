@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 import os
 
 
@@ -10,10 +10,4 @@ bp = Blueprint(
 
 @bp.route('/', methods = ['GET'])
 def index():
-
-    template_vars = {
-        'account_id': request.cookies.get('account_id'),
-        'account_url': request.cookies.get('account_url')
-    }
-
-    return render_template('index.html', **template_vars)
+    return redirect(url_for("course.list_all_courses_with_stat"))

@@ -68,3 +68,13 @@ def user_rate_thread(uid, tid, like):
     conn.commit()
     conn.close()
     return
+def add_new_thread(title, desc, date, uid, call_number):
+    conn, cur = get_connection()
+    sql = """
+            INSERT INTO THREAD(title, description, date, user_id, call_number)
+            VALUES ((%s), (%s), (%s), (%s), (%s))
+        """
+    cur.execute(sql, [title, desc, date, uid, call_number])
+    conn.commit()
+    conn.close()
+    return

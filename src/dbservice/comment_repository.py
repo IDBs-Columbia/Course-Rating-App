@@ -50,3 +50,15 @@ def find_sub_comment_by_main_comment(main_id):
         sub = find_sub_comment_by_main_comment(main['id'])
         res[i]['sub'] = sub
     return res
+
+
+def add_new_comment(content, date, uid, tid):
+    conn, cur = get_connection()
+    sql = """
+            INSERT INTO COMMENT(content, date, user_id, thread_id)
+            VALUES ((%s), (%s), (%s), (%s))
+        """
+    cur.execute(sql, [content, date, uid, tid])
+    conn.commit()
+    conn.close()
+    return

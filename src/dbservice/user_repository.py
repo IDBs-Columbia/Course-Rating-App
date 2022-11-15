@@ -79,3 +79,14 @@ def create_new_user(email, pw):
         conn.close()
         return True
 
+def get_admin_permision(email):
+    conn, cur = get_connection()
+    sql = """
+            SELECT can_manage_report, can_manage_course, can_manage_comment, can_manage_user
+            FROM USER_ADMIN
+            WHERE email = (%s)
+        """
+    cur.execute(sql, [email])
+    res = cur.fetchone()
+
+    return res

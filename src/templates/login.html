@@ -21,26 +21,23 @@
                 </svg><span>Rate My Class</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <form method="GET" action="/search/">
-                            <div class="float-start float-md-end mt-5 mt-md-0 search-area"><i class="fas fa-search float-start search-icon"></i><input class="form-control float-start float-sm-end custom-search-input" type="search" placeholder="Type to search for results" style="margin-right: 16px;width: 20vw;"></div>
-                        </form>
-                    </li>
-                    <li class="nav-item" style="display: flex;"><select name="search_filter">
-                            <optgroup label="Filter by">
-                                <option value="12" selected="">Class</option>
-                                <option value="13">Student</option>
-                            </optgroup>
-                        </select></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                 </ul>
-                <div style="display: flex;"><a class="btn btn-primary shadow" role="button" href="login.html" style="margin: auto;margin-right: 16px;">Log in</a>
-                    <div class="dropdown"><a aria-expanded="false" data-bs-toggle="dropdown" href="#" style="display: flex;"><img class="rounded-circle border border-2 border-dark" src="https://cdn4.iconfinder.com/data/icons/communication-and-media-vol-1/68/Avatar_bubble_businessman_speech_talk_user-512.png" width="40px" style="height: 43.5px;margin: auto;padding-left: 0px;margin-right: 0px;border-width: 1px;border-color: rgb(54,69,95);border-top-color: rgb(78,;border-right-color: 93,;border-bottom-color: 120);border-left-color: 93,;position: relative;" height="40px" alt="account" loading="lazy"></a>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Account</a><a class="dropdown-item" href="#">Settings &amp; Privacy</a><a class="dropdown-item link-danger" href="#">Log out</a></div>
+                <div style="display: flex;">
+                    {% if not user %}
+                    <a class="btn btn-primary shadow" role="button" href="/auth/login" style="margin: auto;margin-right: 16px;">Log in</a>
+                    {% else %}
+                        <div class="dropdown"><a aria-expanded="false" data-bs-toggle="dropdown" style="display: flex;"><img class="rounded-circle border border-2 border-dark" src="https://cdn4.iconfinder.com/data/icons/communication-and-media-vol-1/68/Avatar_bubble_businessman_speech_talk_user-512.png" width="40px" style="height: 43.5px;margin: auto;padding-left: 0px;margin-right: 0px;border-width: 1px;border-color: rgb(54,69,95);border-top-color: rgb(78,;border-right-color: 93,;border-bottom-color: 120);border-left-color: 93,;position: relative;" height="40px" alt="account" loading="lazy"></a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            {% if user.status == "admin" %}
+                            <a class="dropdown-item" href="/admin">Admin Board</a>
+                            {% endif %}
+                            <a class="dropdown-item link-danger" href="/auth/logout">Log out</a></div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
