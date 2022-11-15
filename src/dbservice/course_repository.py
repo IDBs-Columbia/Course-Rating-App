@@ -85,3 +85,16 @@ def add_user_rating(call_number, rating, workload, difficulty, uid):
     conn.commit()
     conn.close()
     return
+
+def check_user_rate_course(call_number, uid):
+    conn, cur = get_connection()
+    sql = """
+        SELECT count(*) = 0 as has_rated
+        FROM USER_REGULAR_RATES_COURSE
+        WHERE USER_ID = (%s) AND CALL_NUMBER = (%s)
+        """
+
+    cur.execute(sql, [uid, call_number])
+    res = cur.fetchone()
+    conn.close()
+    return res

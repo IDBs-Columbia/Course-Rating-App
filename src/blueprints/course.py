@@ -20,10 +20,17 @@ def list_all_courses_with_stat():
     courses = course_repository.get_all_courses_with_stat()
     return render_template("courses.html", courses=courses, user=session.get('user', None))
 
+
+
 @bp.route("/rate/<string:call_number>", methods=["POST"])
 def user_rate_course(call_number):
     if 'user' not in session:
         return redirect(url_for("auth.login"))
+    has_rated = course_repository.check_user_rate_course(session['user']['id'], call_number)
+    print(has_rated)
+    if has_rated.get('has_rated'):
+        return "You have already rated this course."
+
     f = request.form
     rating, workload, difficulty = f['rating'], f['workload'], f['difficulty']
     uid = session['user']['id']
