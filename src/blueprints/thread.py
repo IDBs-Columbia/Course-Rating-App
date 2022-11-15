@@ -7,31 +7,29 @@ from datetime import date
 
 import os
 
-relative_static_folder = os.environ.get("STATIC_FOLDER")
-static_folder = os.path.abspath(relative_static_folder)
 
 bp = Blueprint(
     "thread",
     __name__,
-    static_folder=static_folder,
     url_prefix="/thread"
 )
 
 
 @bp.route("/<int:id>")
 def get_thread_detail(id):
-    thread = Thread.get_thread_by_id(id)
+    thread = thread_repository.get_thread_by_id(id)
     if 'user' in session:
         rated, liked = thread_repository.check_user_like_thread(session['user']['id'], id)
     else:
         rated, liked = False, False
-    # comments = comment_repository.find_main_comment_by_thread(id)
+    comments = comment_repository.find_main_comment_by_thread(id)
 
     # comments = Comment.comment_list(comments)
-    comments = Comment.get_comment_by_thread_id(id)
+    # comments = Comment.get_comment_by_thread_id(id)
     # todo: Comment actually has a recursive structure (comment - subcomment - subsub comment...)
     # todo: How to recursively rendering sub comments with Jinja?
-    return render_template("thread.html", thread=thread, comments=comments, user=session.get('user', None))
+    return render_template("thread.html", thread=thread, comments=comments, user=session.get('user', None),
+                           rated=rated, liked=liked)
 
 @bp.route("/<int:id>", methods=['POST'])
 def add_comment(id):
