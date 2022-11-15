@@ -10,6 +10,25 @@ def get_connection():
     cursor = db_connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     return db_connection, cursor
 
+def get_user_name_by_id(user_id):
+    conn, cur = get_connection()
+
+    sql = """
+            SELECT name
+            FROM USER_ALL
+            WHERE email = (
+                SELECT email
+                FROM USER_REGULAR
+                WHERE id = (%s)
+                LIMIT 1
+            )
+            LIMIT 1
+    """
+    cur.execute(sql, [user_id])
+    res = cur.fetchone()
+    
+    return res
+
 def get_user_info_by_email(email):
     conn, cur = get_connection()
 

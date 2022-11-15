@@ -11,6 +11,22 @@ def get_connection():
     cursor = db_connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     return db_connection, cursor
 
+def get_author_by_comment_id(comment_id):
+    conn, cur = get_connection()
+    sql = """
+        SELECT *
+        FROM USER
+        WHERE ID = (
+            SELECT user_id
+            FROM Comment
+            WHERE id = (%s)
+        )
+    """
+    cur.execute(sql, [comment_id])
+    res = cur.fetchone()
+    conn.close()
+    return res
+
 
 def find_main_comment_by_thread(thread_id):
     conn, cur = get_connection()

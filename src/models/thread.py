@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from dbservice import thread_repository
 
 @dataclass
 class Thread():
@@ -44,3 +45,7 @@ class Thread():
         for thread in query_result:
             thread_list.append(Thread(thread))
         return thread_list
+
+    @staticmethod
+    def get_thread_by_id(id):
+        return Thread(thread_repository.get_thread_by_id(id))
