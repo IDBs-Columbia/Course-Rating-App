@@ -62,7 +62,6 @@ def validate_login(email, password):
     if res is None: return False
     return res['password'] == password
 
-
 def check_email_duplicate(email):
     conn, cur = get_connection()
 
@@ -74,7 +73,6 @@ def check_email_duplicate(email):
     cur.execute(sql, [email])
     res = cur.fetchone()
     return res is not None
-
 
 def create_new_user(email, pw):
     conn, cur = get_connection()
@@ -98,3 +96,38 @@ def create_new_user(email, pw):
         conn.close()
         return True
 
+def get_all_regular_users():
+    conn, cur = get_connection()
+
+    sql = """
+            SELECT 
+                user_regular.id, name, user_all.email, strikes, status
+            FROM 
+                user_all
+            JOIN 
+                user_regular
+            ON 
+                user_all.email = user_regular.email
+        """
+
+    cur.execute(sql)
+    res = cur.fetchall()
+    return res
+
+def get_all_staff_users():
+    conn, cur = get_connection()
+
+    sql = """
+            SELECT 
+                name, user_admin.*
+            FROM 
+                user_all
+            JOIN 
+                user_admin
+            ON 
+                user_all.email = user_admin.email
+        """
+
+    cur.execute(sql)
+    res = cur.fetchall()
+    return res
