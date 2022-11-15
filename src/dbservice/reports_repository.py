@@ -12,7 +12,7 @@ def get_connection():
 
 def get_reports():
     connection, cursor = get_connection()
-    cursor.execute("SELECT * FROM reports")
+    cursor.execute("SELECT * FROM report")
     reports = cursor.fetchall()
     connection.close()
     return reports
