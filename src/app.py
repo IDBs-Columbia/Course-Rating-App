@@ -2,6 +2,7 @@ from flask import Flask, redirect, render_template, \
                  request, url_for, flash
 
 from blueprints.index import bp as index_bp
+from blueprints.admin import bp as admin_bp
 from blueprints.course import bp as course_bp
 from blueprints.thread import bp as thread_bp
 from utils.json_encoder import MyJSONEncoder
@@ -19,6 +20,7 @@ app = Flask(
 
 app.json_provider_class = MyJSONEncoder
 app.register_blueprint(index_bp)
+app.register_blueprint(admin_bp)
 app.register_blueprint(course_bp)
 app.register_blueprint(thread_bp)
 app.register_blueprint(auth_bp)
