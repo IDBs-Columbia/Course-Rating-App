@@ -1,6 +1,7 @@
 import psycopg2
 import psycopg2.extras
 import dbservice.config as config
+from datetime import datetime
 
 
 def get_connection():
@@ -66,3 +67,19 @@ def find_sub_comment_by_main_comment(main_id):
         sub = find_sub_comment_by_main_comment(main['id'])
         res[i]['sub'] = sub
     return res
+
+def add_comment(content, user_id, thread_id, reply_id):
+    conn, cur = get_connection()
+
+    comment_id_hash = str(hash(content))[:6]
+    comment_id = abs(int(comment_id_hash)) + user_id
+
+    date = str(datetime.now())
+
+    sql = """
+        INSERT INTO COMMENT(id, content, user_id, thread_id, reply_id, date)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """
+    cur.execute(sql, [comment_id, content, user_id, thread_id, reply_id, date])
+    conn.commit()
+    conn.close()

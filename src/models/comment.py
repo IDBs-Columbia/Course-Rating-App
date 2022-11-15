@@ -6,12 +6,12 @@ from dbservice import user_repository
 class Comment():
     comment_id: str
     content: str
-    likes: int
-    dislikes: int
     date: str
     reply_id: str
     user_id: str
     thread_id: str
+    likes: int = 0
+    dislikes: int = 0
     author: str = None
     reply_author: str = None
 
