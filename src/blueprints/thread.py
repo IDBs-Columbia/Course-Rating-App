@@ -25,23 +25,23 @@ def get_thread_detail(id):
         rated, liked = thread_repository.check_user_like_thread(session['user']['id'], id)
     else:
         rated, liked = False, False
-    # comments = comment_repository.find_main_comment_by_thread(id)
 
-    # comments = Comment.comment_list(comments)
-    comments = Comment.get_comment_by_thread_id(id)
+    comments = comment_repository.find_main_comment_by_thread(id)
+    comments = Comment.comment_list(comments)
+    print(thread)
     # todo: Comment actually has a recursive structure (comment - subcomment - subsub comment...)
     # todo: How to recursively rendering sub comments with Jinja?
     return render_template("thread.html", thread=thread, comments=comments, user=session.get('user', None))
 
-@bp.route("/<int:id>", methods=['POST'])
+@bp.route("/comment/<int:id>", methods=['POST'])
 def add_comment(id):
     thread_id = id
-    comment = request.form.get('comment')
-    reply_id = request.form.get('reply_id', "null")
+    comment = request.form.get('comment_content')
+    reply_id = request.form.get('reply_id', 1)
     user_id = session.get('user').get("id")
 
     comment_repository.add_comment(comment, user_id, thread_id, reply_id)
-    return redirect(url_for('thread.get_thread_detail', id=id))
+    return "comment successfully submitted!"
 
 
 @bp.route("/new/<string:call_number>", methods=["POST"])

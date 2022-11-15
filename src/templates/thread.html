@@ -178,7 +178,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="container">
-                                                <form action="/comment/report/{{ comment.id }}" method="post">
+                                                <form action="report/{{ comment.id }}" method="post">
                                                     <fieldset><select class="form-select" style="margin: 16px 0px;"
                                                                       name="report_category">
                                                         <option value="0" selected="">untruthful</option>
@@ -222,7 +222,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="container">
-                                    <form action="/comment/new/{{ thread.id }}" method="post">
+                                    <form action="comment/{{ thread.thread_id }}" method="post">
                                         <fieldset>
                                             <textarea class="form-control" style="margin: 16px 0px;"
                                                            placeholder="Content" rows="8"

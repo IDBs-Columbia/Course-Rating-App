@@ -3,6 +3,8 @@ import psycopg2.extras
 import dbservice.config as config
 from datetime import datetime
 
+from random import randint
+
 
 def get_connection():
     db_info = config.get_db_info()
@@ -94,7 +96,7 @@ def add_comment(content, user_id, thread_id, reply_id):
     conn, cur = get_connection()
 
     comment_id_hash = str(hash(content))[:6]
-    comment_id = abs(int(comment_id_hash)) + user_id
+    comment_id = abs(int(comment_id_hash)) + randint(1, 10000)
 
     date = str(datetime.now())
 
