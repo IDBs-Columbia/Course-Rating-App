@@ -5,10 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>FAQ - Rate My Class</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="assets/css/styles.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.min.css">
 </head>
 
 <body>
@@ -67,8 +69,9 @@
                 <div class="card-body">
                     <p class="card-text"></p>
                     <ul class="list-group text-capitalize fs-4 text-white bg-primary">
-                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="#">users</a></li>
-                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="#">Reports</a></li>
+                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="/admin/users/regular">Regular Users</a></li>
+                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="/admin/users/staff">Staff Users</a></li>
+                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="/admin/reports">Reports</a></li>
                     </ul>
                 </div>
             </div><!-- End: User Panel -->
@@ -80,16 +83,67 @@
                 <div class="card-body">
                     <p class="card-text"></p>
                     <ul class="list-group text-capitalize fs-4 text-white bg-primary">
-                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="#">Institutions</a></li>
-                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="#">Courses</a></li>
+                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="/admin/institutions">Institutions</a></li>
+                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="/admin/courses">Courses</a></li>
+                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="/admin/threads">Threads</a></li>
+                        <li class="list-group-item bg-primary border-0"><a class="link-light" href="/admin/comments">Comments</a></li>
                     </ul>
                 </div>
             </div><!-- End: Institution Panel -->
         </aside>
-        <main style="height: 100%;width: 80%;"></main>
+        <main style="height: 100%;width: 80%;">
+            <!-- Start: Table With Search -->
+            <div class="col-md-12 search-table-col">
+                <div class="form-group pull-right col-lg-4"><input type="text" class="search form-control" placeholder="Search by typing here.."></div><span class="counter pull-right"></span>
+                <div class="table-responsive table table-hover table-bordered results">
+                    <table class="table table-hover table-bordered">
+                        <thead class="bill-header cs">
+                            <tr>
+                                <th id="trs-hd-17" class="col-lg-1">Id</th>
+                                <th id="trs-hd-18" class="col-lg-2">Title</th>
+                                <th id="trs-hd-19" class="col-lg-3">Description</th>
+                                <th id="trs-hd-20" class="col-lg-2">Date</th>
+                                <th id="trs-hd-21" class="col-lg-2">User Id</th>
+                                <th id="trs-hd-22" class="col-lg-2">Call Number</th>
+                                <th id="trs-hd-24" class="col-lg-2">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="warning no-result">
+                                <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
+                            </tr>
+                            <tr temp="{% for comment in comments %}"></tr>
+                            <tr style="width: auto;">
+                                <td class="text-center justify-content-center align-items-center">{{thread.id}}</td>
+                                <td class="text-truncate text-center justify-content-center align-items-center">{{thread.title}}<br></td>
+                                <td class="text-center justify-content-center align-items-center">{{thread.description}}<br></td>
+                                <td class="text-center justify-content-center align-items-center">{{thread.date}}</td>
+                                <td class="text-center justify-content-center align-items-center">{{thread.user_id}}</td>
+                                <td class="text-center justify-content-center align-items-center">{{thread.call_number}}</td>
+                                <td class="text-center justify-content-center align-items-center"><button class="btn btn-danger" style="margin-left: 5px;" type="submit" data-bs-target="#modal-delete-comment" data-bs-toggle="modal"><i class="fa fa-trash" style="font-size: 15px;"></i></button></td>
+                            </tr>
+                            <tr temp="{% endfor %}"></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- End: Table With Search -->
+            <div class="modal fade" role="dialog" tabindex="-1" id="modal-delete-comment">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Comment</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this comment?</p>
+                        </div>
+                        <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-danger" type="button">Delete</button></div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
+    <script src="../assets/js/script.min.js"></script>
 </body>
 
 </html>
