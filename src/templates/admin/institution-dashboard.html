@@ -93,10 +93,10 @@
         </aside>
         <main style="height: 100%;width: 80%;">
             <div class="container" style="margin-top: 40px;">
-                <form method="PUT" action="/admin/institutions">
+                <form method="POST" action="/admin/institutions">
                     <fieldset>
                         <legend>Add an institution</legend>
-                        <div class="d-inline-flex" style="height: auto;"><input class="form-control" type="text" placeholder="Intitution name" style="height: 100%;"><button class="btn btn-primary text-end bg-success d-xxl-flex justify-content-xxl-center" type="submit" style="height: 100%;">Add</button></div>
+                        <div class="d-inline-flex" style="height: auto;"><input class="form-control" type="text" placeholder="Intitution name" style="height: 100%;" name="institution_name"><button class="btn btn-primary text-end bg-success d-xxl-flex justify-content-xxl-center" type="submit" style="height: 100%;">Add</button></div>
                     </fieldset>
                 </form>
             </div><!-- Start: Table With Search -->
